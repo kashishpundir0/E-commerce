@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 @RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController{
@@ -26,6 +27,11 @@ public class ProductController{
         Product product = productService.getSingleProduct(id);
         return ResponseEntity.ok(product);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?>  updateProduct(@PathVariable Long id, @ModelAttribute ProductDto request){
+        return ResponseEntity.ok(productService.updateProduct(request, id));
+    }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
