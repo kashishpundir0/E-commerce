@@ -18,9 +18,9 @@ public class Product{
     private Double price;
     private Integer quantity;
 
-//    @ManyToOne
-//    @JoinColumn(name = "category_id")
-//    private  Category category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private  Category category;
 
 
 }

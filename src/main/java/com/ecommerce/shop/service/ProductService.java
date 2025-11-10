@@ -1,7 +1,9 @@
 package com.ecommerce.shop.service;
 
 import com.ecommerce.shop.dtos.ProductDto;
+import com.ecommerce.shop.entity.Category;
 import com.ecommerce.shop.entity.Product;
+import com.ecommerce.shop.repository.CategoryRepository;
 import com.ecommerce.shop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,6 +15,7 @@ import java.util.Map;
 @Service
 public class ProductService {
     private final ProductRepository repo;
+    private final CategoryRepository categoryRepo;
 
     public Object createProduct(ProductDto request){
         Product product = new Product();
@@ -20,6 +23,11 @@ public class ProductService {
         product.setDescription(request.getDescription());
         product.setPrice(request.getPrice());
         product.setQuantity(request.getQuantity());
+
+        Category category = categoryRepo.findById(request.getCategoryId())
+                .orElseThrow(() -> new RuntimeException("Category not found with id " + request.getCategoryId()));
+        product.setCategory(category);
+
         return Map.of("data", repo.save(product));
     }
     public List<Product> getProduct(){
