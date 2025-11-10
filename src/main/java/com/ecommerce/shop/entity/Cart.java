@@ -1,12 +1,23 @@
 package com.ecommerce.shop.entity;
 
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 public class Cart {
+    @Id
+    @GeneratedValue(strategy =GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne
+    private Products products;
+
+    private int quantity;
+
 }

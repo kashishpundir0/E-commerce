@@ -2,7 +2,7 @@ package com.ecommerce.shop.controller;
 
 
 import com.ecommerce.shop.dtos.ProductDto;
-import com.ecommerce.shop.entity.Product;
+import com.ecommerce.shop.entity.Products;
 import com.ecommerce.shop.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,8 +24,8 @@ public class ProductController{
     }
     @GetMapping("/singleProduct/{id}")
     public  ResponseEntity<?> getSingleProduct(@PathVariable Long id){
-        Product product = productService.getSingleProduct(id);
-        return ResponseEntity.ok(product);
+        Products products = productService.getSingleProduct(id);
+        return ResponseEntity.ok(products);
     }
     @PutMapping("/update/{id}")
     public ResponseEntity<?>  updateProduct(@PathVariable Long id, @ModelAttribute ProductDto request){
@@ -35,7 +35,7 @@ public class ProductController{
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable Long id){
         productService.deleteProduct(id);
-        return ResponseEntity.ok("Product deleted");
+        return ResponseEntity.ok("Products deleted");
     }
 
 }
