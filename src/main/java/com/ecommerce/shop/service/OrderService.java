@@ -2,7 +2,7 @@ package com.ecommerce.shop.service;
 
 import com.ecommerce.shop.dtos.OrderDto;
 import com.ecommerce.shop.entity.Order;
-import com.ecommerce.shop.entity.Products;
+import com.ecommerce.shop.entity.Product;
 import com.ecommerce.shop.entity.User;
 import com.ecommerce.shop.repository.CartRepository;
 import com.ecommerce.shop.repository.OrderRepository;
@@ -27,21 +27,21 @@ public class OrderService {
     public Object placeOrder(OrderDto request){
         User user = userRepository.findById(request.getUserId()).orElseThrow(()-> new RuntimeException("User not found"));
 
-        Products products = productRepository.findById(request.getProductId()).orElseThrow(()-> new RuntimeException("Products not found"));
+        Product product = productRepository.findById(request.getProductId()).orElseThrow(()-> new RuntimeException("Product not found"));
 
-        if(products.getQuantity()<1){
-            throw new RuntimeException("Products out of stock");
+        if(product.getQuantity()<1){
+            throw new RuntimeException("Product out of stock");
         }
 
         Order order = new Order();
         order.setUser(user);
-        order.setProducts(products);
+        order.setProduct(product);
         order.setOrderDate(new Date());
         order.setQuantity(request.getQuantity());
-        order.setTotalAmount(request.getTotalAmount());
-        products.setQuantity(products.getQuantity() - request.getQuantity());
+        order.setTotalAmount(product.getPrice() * request.getQuantity());
+        product.setQuantity(product.getQuantity() - request.getQuantity());
 
-        productRepository.save(products);
+        productRepository.save(product);
          Order saveOrder = orderRepository.save(order);
          return Map.of("message", "order place successfully", "data", saveOrder);
 

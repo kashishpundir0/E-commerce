@@ -2,7 +2,7 @@ package com.ecommerce.shop.service;
 
 import com.ecommerce.shop.dtos.ProductDto;
 import com.ecommerce.shop.entity.Category;
-import com.ecommerce.shop.entity.Products;
+import com.ecommerce.shop.entity.Product;
 import com.ecommerce.shop.repository.CategoryRepository;
 import com.ecommerce.shop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,27 +18,28 @@ public class ProductService {
     private final CategoryRepository categoryRepo;
 
     public Object createProduct(ProductDto request){
-        Products products = new Products();
-        products.setName(request.getName());
-        products.setDescription(request.getDescription());
-        products.setPrice(request.getPrice());
-        products.setQuantity(request.getQuantity());
+        Product product = new Product();
+        product.setName(request.getName());
+        product.setDescription(request.getDescription());
+        product.setPrice(request.getPrice());
+        product.setQuantity(request.getQuantity());
 
         Category category = categoryRepo.findById(request.getCategoryId())
                 .orElseThrow(() -> new RuntimeException("Category not found with id " + request.getCategoryId()));
-        products.setCategory(category);
+        product.setCategory(category);
 
-        return Map.of("data", repo.save(products));
+        return Map.of("data", repo.save(product));
     }
-    public List<Products> getProduct(){
+    public List<Product> getProduct(){
+
         return  repo.findAll();
     }
-    public Products getSingleProduct(Long id){
-        Products exist = repo.findById(id).orElseThrow(()-> new RuntimeException("Products is not available"));
+    public Product getSingleProduct(Long id){
+        Product exist = repo.findById(id).orElseThrow(()-> new RuntimeException("Product is not available"));
         return exist;
     }
     public Object updateProduct(ProductDto request, Long id){
-        Products exist = repo.findById(id).orElseThrow(()->new RuntimeException("Products is not available"));
+        Product exist = repo.findById(id).orElseThrow(()->new RuntimeException("Product is not available"));
         exist.setName(request.getName());
         exist.setDescription(request.getDescription());
         exist.setQuantity(request.getQuantity());

@@ -27,8 +27,10 @@ public class AppConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/product", "/product/**").permitAll()
                         .requestMatchers("/category", "/category/**").permitAll()
-//                        .requestMatchers("cart", "/cart/**").permitAll()
                         .requestMatchers("/auth", "/auth/**").permitAll()
+                        .requestMatchers("/payment","/payment/**").permitAll()
+                        .requestMatchers("/cart","/cart/**").permitAll()
+                        .requestMatchers("/order/", "/order/**").permitAll()
                         .requestMatchers("/error", "/error/**", "/index.html", "/favicon.ico").permitAll()
                         .anyRequest().authenticated()
                 )
@@ -36,7 +38,7 @@ public class AppConfig {
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
-
     }
+
 
 }

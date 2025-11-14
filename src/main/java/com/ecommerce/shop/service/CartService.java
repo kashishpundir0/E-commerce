@@ -2,7 +2,7 @@ package com.ecommerce.shop.service;
 
 import com.ecommerce.shop.dtos.CartDto;
 import com.ecommerce.shop.entity.Cart;
-import com.ecommerce.shop.entity.Products;
+import com.ecommerce.shop.entity.Product;
 import com.ecommerce.shop.entity.User;
 import com.ecommerce.shop.repository.CartRepository;
 import com.ecommerce.shop.repository.ProductRepository;
@@ -26,12 +26,13 @@ public class CartService {
     public Object addToCart(CartDto request){
         User user = userRepository.findById(request.getUserId())
                 .orElseThrow(()->new RuntimeException("User not found with this id : "+ request.getUserId()));
-        Products products = productRepository.findById(request.getProductId())
-                .orElseThrow(()-> new RuntimeException("Products not found with this id : "+ request.getProductId()));
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(()-> new RuntimeException("Product not found with this id : "+ request.getProductId()));
 
         List<Cart> cartlist = user.getCart()!=null?user.getCart():new ArrayList<>();
         Cart cart=new Cart();
-        cart.setProducts(products);
+        cart.setUser(user);
+        cart.setProduct(product);
         cart.setQuantity(request.getQuantity());
         cartlist.add(cartRepository.save(cart));
 

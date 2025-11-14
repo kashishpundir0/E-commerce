@@ -20,7 +20,7 @@ public class UserService {
     public Object register(User request){
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         User saveUser = repo.save(request);
-        return Map.of("message", "UserRegistered successfull", "data", saveUser);
+        return Map.of("message", "UserRegistered successfully", "data", saveUser);
     }
 
     //Login User

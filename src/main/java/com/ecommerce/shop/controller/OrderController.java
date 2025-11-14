@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 public class OrderController{
     private final OrderService orderService;
 
-    @PutMapping("/place")
+    @PostMapping("/place")
     public ResponseEntity<?> placeOrder(@ModelAttribute OrderDto request){
         return ResponseEntity.ok(orderService.placeOrder(request));
     }

@@ -20,7 +20,7 @@ public class CartController {
     public ResponseEntity<?> getAllCart(){
         return ResponseEntity.ok(cartService.viewCart());
     }
-    @GetMapping("user/{id}")
+    @GetMapping("user/{userId}")
     public ResponseEntity<?> getUserCart(@PathVariable Long userId){
         return ResponseEntity.ok(cartService.getCartByUser(userId));
     }

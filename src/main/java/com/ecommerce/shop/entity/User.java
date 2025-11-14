@@ -1,5 +1,6 @@
 package com.ecommerce.shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,6 +20,7 @@ public class User {
 //    private String role;
 
     @OneToMany
+    @JsonIgnore
     private List<Cart> cart;
 
 }

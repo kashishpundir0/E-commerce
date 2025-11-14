@@ -1,11 +1,10 @@
 package com.ecommerce.shop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
 
 @Entity
 @Getter
@@ -16,7 +15,11 @@ public class Cart {
     private Long id;
 
     @OneToOne
-    private Products products;
+    private Product product;
+
+    @JsonIgnore
+    @ManyToOne
+    private User user;
 
     private int quantity;
 

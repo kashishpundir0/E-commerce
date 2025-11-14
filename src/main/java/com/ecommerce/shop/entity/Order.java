@@ -18,7 +18,7 @@ public class Order {
     @ManyToOne
     private User user;
     @OneToOne
-    private Products products;
+    private Product product;
     private Date orderDate;
     private Integer quantity;
     private Double totalAmount;
