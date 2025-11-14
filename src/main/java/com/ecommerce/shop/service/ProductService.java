@@ -31,6 +31,7 @@ public class ProductService {
         return Map.of("data", repo.save(product));
     }
     public List<Product> getProduct(){
+
         return  repo.findAll();
     }
     public Product getSingleProduct(Long id){

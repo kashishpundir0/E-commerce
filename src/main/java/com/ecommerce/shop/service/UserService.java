@@ -20,7 +20,7 @@ public class UserService {
     public Object register(User request){
         request.setPassword(passwordEncoder.encode(request.getPassword()));
         User saveUser = repo.save(request);
-        return Map.of("message", "UserRegistered successfull", "data", saveUser);
+        return Map.of("message", "UserRegistered successfully", "data", saveUser);
     }
 
     //Login User
@@ -28,7 +28,7 @@ public class UserService {
         User existUser = repo.findByEmail(request.getEmail()).orElseThrow(()-> new RuntimeException("User not found"));
 
         if(!passwordEncoder.matches(request.getPassword(), existUser.getPassword())){
-            throw new RuntimeException("Invallid Password");
+            throw new RuntimeException("Invalid Password");
         }
 
         String token = jwtTokenUtil.generateToken(existUser.getEmail());

@@ -1,6 +1,7 @@
 package com.ecommerce.shop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,14 +14,13 @@ public class Cart {
     @GeneratedValue(strategy =GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    private Product product;
+
+    @JsonIgnore
     @ManyToOne
     private User user;
 
-    @ManyToOne
-    private Product product;
-
     private int quantity;
-
-
 
 }

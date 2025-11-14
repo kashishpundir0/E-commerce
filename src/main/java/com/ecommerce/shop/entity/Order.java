@@ -9,13 +9,17 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private  Long id;
 
     @ManyToOne
-    private  User userId;
+    private User user;
+    @OneToOne
+    private Product product;
     private Date orderDate;
+    private Integer quantity;
     private Double totalAmount;
 }

@@ -1,11 +1,6 @@
 package com.ecommerce.shop.dtos;
 
-import com.ecommerce.shop.entity.Product;
-import com.ecommerce.shop.entity.User;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
 
 @Data
 

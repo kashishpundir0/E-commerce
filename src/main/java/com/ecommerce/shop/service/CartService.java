@@ -10,10 +10,9 @@ import com.ecommerce.shop.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 //import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
@@ -30,25 +29,34 @@ public class CartService {
         Product product = productRepository.findById(request.getProductId())
                 .orElseThrow(()-> new RuntimeException("Product not found with this id : "+ request.getProductId()));
 
-        Cart cart = new Cart();
+        List<Cart> cartlist = user.getCart()!=null?user.getCart():new ArrayList<>();
+        Cart cart=new Cart();
         cart.setUser(user);
         cart.setProduct(product);
         cart.setQuantity(request.getQuantity());
-        return Map.of("data", cartRepository.save(cart));
+        cartlist.add(cartRepository.save(cart));
+
+        user.setCart(cartlist);
+
+        return Map.of("data",userRepository.save(user).getCart() );
+
     }
 
     public List<Cart> viewCart(){
         return cartRepository.findAll();
     }
     public List<Cart> getCartByUser(Long userId){
-        return cartRepository.findByUserId(userId);
+        User user=userRepository.findById(userId).orElseThrow(()->new RuntimeException("User doesn't Exist"));
+        return user.getCart();
     }
     public void removeCart(Long cartId){
         cartRepository.deleteById(cartId);
     }
     public void clearCart(Long userId){
-        List<Cart> userCarts = cartRepository.findByUserId(userId);
-        cartRepository.deleteAll(userCarts);
+        User user=userRepository.findById(userId).orElseThrow(()->new RuntimeException("User doesn't Exist"));
+        cartRepository.deleteAll(user.getCart());
+        user.setCart(new ArrayList<>());
+        userRepository.save(user);
     }
 
 
